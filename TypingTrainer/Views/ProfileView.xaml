@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="TypingTrainer.Views.ProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="{StaticResource DarkBgBrush}" MouseMove="MainGrid_MouseMove" ClipToBounds="True">
+
+        <!-- 1. Анимированный фон (ТЕПЕРЬ 234.png) -->
+        <Image Source="/Images/234.png" 
+               Stretch="UniformToFill" 
+               Opacity="0.8"
+               RenderTransformOrigin="0.5,0.5"
+               IsHitTestVisible="False">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.4" ScaleY="1.4"/>
+                    <TranslateTransform x:Name="ImageMovement" />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <!-- 2. Затемнение для читаемости -->
+        <Rectangle Fill="{StaticResource DarkBgBrush}" Opacity="0.5" IsHitTestVisible="False"/>
+
+        <!-- 3. Белая карточка профиля -->
+        <Border Width="420" Padding="30" CornerRadius="10"
+                Background="{StaticResource DarkBrush}"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <TextBlock Text="👤 Мой профиль" FontSize="22" FontWeight="Bold"
+                           Foreground="{StaticResource PrimaryBrush}"
+                           TextAlignment="Center" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Логин:" Foreground="{StaticResource LightBrush}" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding Login}" Foreground="{StaticResource PrimaryBrush}" 
+                           FontWeight="Bold" FontSize="16" Margin="0,5,0,10"/>
+
+                <TextBlock Text="ФИО:" Foreground="{StaticResource LightBrush}"/>
+                <TextBox Style="{StaticResource InputBox}"
+                         Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Группа:" Foreground="{StaticResource LightBrush}"/>
+                <TextBox Style="{StaticResource InputBox}"
+                         Text="{Binding Group, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- СТАРЫЙ ПАРОЛЬ -->
+                <TextBlock Text="Старый пароль (для смены):" Foreground="{StaticResource LightBrush}" Margin="0,10,0,0"/>
+                <Grid Margin="0,4,0,8">
+                    <PasswordBox x:Name="OldPasswordInput" 
+                                 Style="{StaticResource PasswordBox}"
+                                 Margin="0" Padding="8,8,35,8"
+                                 PasswordChanged="OldPasswordInput_PasswordChanged"/>
+
+                    <TextBox x:Name="OldPasswordTextBox" 
+                             Style="{StaticResource InputBox}"
+                             Margin="0" Padding="8,8,35,8"
+                             Visibility="Collapsed"
+                             TextChanged="OldPasswordTextBox_TextChanged"/>
+
+                    <Button x:Name="ShowOldPasswordBtn" 
+                            Content="👁️"
+                            Foreground="{StaticResource PrimaryBrush}"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Background="Transparent" BorderThickness="0"
+                            Margin="0,0,5,0" Cursor="Hand" Focusable="False"
+                            Click="ShowOldPasswordBtn_Click"/>
+                </Grid>
+
+                <!-- НОВЫЙ ПАРОЛЬ -->
+                <TextBlock Text="Новый пароль:" Foreground="{StaticResource LightBrush}"/>
+                <Grid Margin="0,4,0,8">
+                    <PasswordBox x:Name="NewPasswordInput" 
+                                 Style="{StaticResource PasswordBox}"
+                                 Margin="0" Padding="8,8,35,8"
+                                 PasswordChanged="NewPasswordInput_PasswordChanged"/>
+
+                    <TextBox x:Name="NewPasswordTextBox" 
+                             Style="{StaticResource InputBox}"
+                             Margin="0" Padding="8,8,35,8"
+                             Visibility="Collapsed"
+                             TextChanged="NewPasswordTextBox_TextChanged"/>
+
+                    <Button x:Name="ShowNewPasswordBtn" 
+                            Content="👁️"
+                            Foreground="{StaticResource PrimaryBrush}"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Background="Transparent" BorderThickness="0"
+                            Margin="0,0,5,0" Cursor="Hand" Focusable="False"
+                            Click="ShowNewPasswordBtn_Click"/>
+                </Grid>
+
+                <!-- Статус -->
+                <TextBlock Text="{Binding Status}" Foreground="DarkRed" FontWeight="SemiBold"
+                           TextWrapping="Wrap" Margin="0,10,0,5"/>
+
+                <!-- Кнопки -->
+                <Button Content="Сохранить" Style="{StaticResource AnimatedButton}"
+                        Command="{Binding SaveCommand}" Margin="0,10,0,5"/>
+
+                <Button Content="Назад в меню" Style="{StaticResource AnimatedButton}"
+                        Command="{Binding GoBackCommand}"
+                        Background="#E0E0E0" Foreground="#333333"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

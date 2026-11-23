@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="TypingTrainer.Views.StatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Главный Grid с обработчиком мыши и запретом выхода за края -->
+    <Grid Background="{StaticResource DarkBgBrush}" MouseMove="MainGrid_MouseMove" ClipToBounds="True">
+
+        <!-- 1. Анимированный фон (234.png) -->
+        <Image Source="/Images/234.png" 
+               Stretch="UniformToFill" 
+               Opacity="0.8"
+               RenderTransformOrigin="0.5,0.5"
+               IsHitTestVisible="False">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.4" ScaleY="1.4"/>
+                    <TranslateTransform x:Name="ImageMovement" />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <!-- 2. Затемнение для читаемости -->
+        <Rectangle Fill="{StaticResource DarkBgBrush}" Opacity="0.5" IsHitTestVisible="False"/>
+
+        <!-- 3. Основной контент статистики -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <Border Background="{StaticResource PrimaryBrush}" Padding="20,10">
+                <TextBlock Text="📊 Статистика и рейтинг"
+                           FontSize="18" FontWeight="Bold" Foreground="White"/>
+            </Border>
+
+            <!-- Таблицы -->
+            <Grid Grid.Row="1" Margin="20,15,20,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Мои результаты -->
+                <Border Padding="20" Background="{StaticResource DarkBrush}" CornerRadius="10" Margin="0,0,0,10">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="5" Opacity="0.3"/>
+                    </Border.Effect>
+                    <DockPanel>
+                        <TextBlock Text="Мои результаты" DockPanel.Dock="Top" 
+                                   Foreground="{StaticResource PrimaryBrush}"
+                                   FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                        <DataGrid ItemsSource="{Binding MyResults}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                                  Background="White" RowBackground="White" AlternatingRowBackground="#F9F9F9"
+                                  Foreground="Black" BorderThickness="1" BorderBrush="#E0E0E0"
+                                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E0E0E0"
+                                  HeadersVisibility="Column" SelectionMode="Single">
+
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Padding" Value="10,8"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Padding" Value="10,8"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Текст ID" Binding="{Binding TextId}" Width="80"/>
+                                <DataGridTextColumn Header="Точность" Binding="{Binding Accuracy, StringFormat={}{0}%}" Width="100"/>
+                                <DataGridTextColumn Header="Ошибки" Binding="{Binding ErrorsCount}" Width="80"/>
+                                <DataGridTextColumn Header="Время" Binding="{Binding TimeSeconds, StringFormat={}{0} сек}" Width="80"/>
+                                <DataGridTextColumn Header="Скорость (WPM)" Binding="{Binding WPM}" Width="120"/>
+                                <DataGridTextColumn Header="Дата" Binding="{Binding DateCompleted, StringFormat={}{0:dd.MM.yyyy HH:mm}}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+
+                <!-- Общий рейтинг -->
+                <Border Grid.Row="1" Padding="20" Background="{StaticResource DarkBrush}" CornerRadius="10" Margin="0,10,0,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="5" Opacity="0.3"/>
+                    </Border.Effect>
+                    <DockPanel>
+                        <TextBlock Text="Общий рейтинг (Топ-50)" DockPanel.Dock="Top"
+                                   Foreground="{StaticResource PrimaryBrush}"
+                                   FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                        <DataGrid ItemsSource="{Binding GlobalRating}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                                  Background="White" RowBackground="White" AlternatingRowBackground="#F9F9F9"
+                                  Foreground="Black" BorderThickness="1" BorderBrush="#E0E0E0"
+                                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E0E0E0"
+                                  HeadersVisibility="Column" SelectionMode="Single">
+
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Padding" Value="10,8"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Padding" Value="10,8"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Место" Binding="{Binding Place}" Width="80"/>
+                                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="*"/>
+                                <DataGridTextColumn Header="Лучший WPM" Binding="{Binding BestWpm}" Width="120"/>
+                                <DataGridTextColumn Header="Ср. точность" Binding="{Binding AvgAccuracy, StringFormat={}{0:F1}%}" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <!-- Кнопка возврата -->
+            <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Button Content="Назад в главное меню" Style="{StaticResource AnimatedButton}"
+                        Width="250" Command="{Binding GoBackCommand}"
+                        Background="{StaticResource PrimaryBrush}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

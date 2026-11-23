@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="TypingTrainer.Views.RegistrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Background="{StaticResource DarkBgBrush}">
+        <Border Width="400" Padding="30" CornerRadius="10"
+                Background="{StaticResource LightBrush}"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Регистрация" FontSize="22" FontWeight="Bold"
+                           Foreground="{StaticResource PrimaryBrush}"
+                           TextAlignment="Center" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Логин" Foreground="{StaticResource DarkBrush}"/>
+                <TextBox Style="{StaticResource InputBox}"
+                         Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Пароль (мин. 6 символов)" Foreground="{StaticResource DarkBrush}"/>
+                <PasswordBox x:Name="PasswordInput" Style="{StaticResource PasswordBox}"
+                             PasswordChanged="PasswordInput_PasswordChanged"/>
+
+                <TextBlock Text="ФИО" Foreground="{StaticResource DarkBrush}"/>
+                <TextBox Style="{StaticResource InputBox}"
+                         Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Группа" Foreground="{StaticResource DarkBrush}"/>
+                <TextBox Style="{StaticResource InputBox}"
+                         Text="{Binding Group, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="DarkRed"
+                           TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                <Button Content="Зарегистрироваться" Style="{StaticResource AnimatedButton}"
+                        Command="{Binding RegisterCommand}" Margin="0,10,0,5"/>
+                <Button Content="Назад к входу" Style="{StaticResource AnimatedButton}"
+                        Command="{Binding GoToLoginCommand}"
+                        Background="{StaticResource DarkBrush}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

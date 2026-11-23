@@ -1,0 +1,12 @@
+﻿<Window x:Class="TypingTrainer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Тренажёр слепой печати" Height="720" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource DarkBgBrush}">
+
+    <Grid x:Name="RootGrid">
+        <!-- Контент -->
+        <ContentControl x:Name="MainContent"/>
+    </Grid>
+</Window>
