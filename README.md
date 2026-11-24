@@ -1,3 +1,4 @@
+<img width="1346" height="873" alt="image" src="https://github.com/user-attachments/assets/21297021-4d80-4a95-921d-17fd7eb14887" />
 # ⌨️ Тренажёр слепой печати (TypingTrainer)
 
 Десктопное приложение для Windows, созданное для развития навыков скоростной и слепой печати. Проект написан на C# с использованием WPF и паттерна MVVM. 
@@ -39,4 +40,5 @@
 
 1. Скачайте проект или клонируйте репозиторий:
    ```bash
-   git clone https://github.com/drdvdvc-code/TypingTrainer.git
+   git clone https://github.com/drdvdvc-code/TypingTrainer.git<img width="1354" height="873" alt="image" src="https://github.com/user-attachments/assets/53cc1f6d-c2ca-4d2e-b8ab-04322e99d663" />
+
