@@ -39,4 +39,4 @@
 
 1. Скачайте проект или клонируйте репозиторий:
    ```bash
-   git clone https://github.com/ваш-аккаунт/TypingTrainer.git
+   git clone https://github.com/drdvdvc-code/TypingTrainer.git
